@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="px-2 text-center">
+  <button onclick="location.href='/create-pipeline/'" type="button" class="btn btn-primary">Create Pipeline</button>
+</div>
+
+<div class="row justify-content-center">
+    {% for obj in content_dicts%}
+      {% include 'card_container.html' with content_dict=obj content_template_name=content_template_name%}
+    {% endfor %}
+    </div>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <!--- <script src="{% static 'js/module_list.js' %}"></script> --->
+{% endblock %}

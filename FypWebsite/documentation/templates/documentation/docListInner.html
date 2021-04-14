@@ -1,0 +1,19 @@
+{% extends "card_inner.html" %}
+{% block title %}
+  {{fed_data.title}}
+{% endblock %}
+{% block main_body %}
+<hr/>
+<div class="markdown-content small">
+{{fed_data.content|truncatechars:200}}
+</div>
+<hr/>
+{% endblock %}
+{% block second_body %}
+  <h6>Created By</h6>
+  {{fed_data.user}}
+{% endblock %}
+{% block footer %}
+  <button onclick="location.href='{{fed_data.url}}'" type="button" class="btn btn-success">
+    View Post</button>
+{% endblock %}

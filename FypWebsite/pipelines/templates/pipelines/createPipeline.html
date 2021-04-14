@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+  <form method='POST' enctype='multipart/form-data'>{% csrf_token %}
+<div class="row justify-content-center">
+{% for obj in content_dicts%}
+  {% include 'card_container.html' with content_dict=obj content_template_name=content_template_name%}
+{% endfor %}
+</div>
+</form>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'pipelines/js/createPipeline.js' %}"></script>
+{% endblock %}

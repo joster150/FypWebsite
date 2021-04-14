@@ -1,0 +1,54 @@
+{% extends "card_inner.html" %}
+{% block title %}
+  Use {{fed_data.name}}
+{% endblock %}
+{% block main_body %}
+<div><h6 class="text-muted my-0 toggle">Table Groups \/</h6><div class="my-1" style="display:none;">
+  {{fed_data.table_groups|safe}}
+</div></div>
+<div><h6 class="text-muted my-0 toggle">Tables \/</h6><div class="my-1" style="display:none;">
+  {{fed_data.tables_in_group|safe}}
+</div></div>
+<div><h6 class="text-muted my-0 toggle">Search Column \/</h6><div class="my-1" style="display:none;">
+  {{fed_data.columns_in_table|safe}}
+</div></div>
+<div><h6 class="text-muted my-0 toggle">Search \/</h6><div class="my-1" style="display:none;">
+  <input type="text" id="myInput" onkeyup="mySearchFunction()" placeholder="Filter on selected col.." title="Filter">
+</div></div>
+<div><h6 class="text-muted my-0 toggle">Table \/</h6><div class="my-1">
+  <div class='table-responsive text-center' style="height: 200px;overflow: auto;">
+    <table class="table text-xsmall mx-auto" id="myTable">
+    <thead>
+    <tr>
+      {% for col in fed_data.table_data_columns%}
+      <th scope="col">{{col}}</th>
+      {% endfor %}
+    </tr>
+    </thead>
+    <tbody class="table_html">
+    {% for row in fed_data.rows %}
+    <tr>
+    {% for col in fed_data.table_data_columns %}
+    {% for c,r in row.items %}
+      {%if col == c %}
+      <td>{{r}}</td>
+      {% endif %}
+    {% endfor %}
+    {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+</div>
+</div>
+<div><h6 class="text-muted my-0 toggle">Add to Output List</h6><div class="my-1">
+<p id="table_field_to_add"><br></p><button type="button" id="add_to_output">Add to Outputs</button>
+</div></div>
+{% endblock %}
+{% block second_body %}
+{% endblock %}
+{% block footer %}
+<button type="submit" class="submit_ajax_steps btn btn-primary">Submit</button>
+{% endblock %}
+</div></div></div>

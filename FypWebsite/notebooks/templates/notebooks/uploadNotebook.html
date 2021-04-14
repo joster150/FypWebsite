@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<form method='POST' enctype='multipart/form-data'>
+<div class="row justify-content-center">
+    {% csrf_token %}
+{% for obj in content_dicts%}
+  {% include 'card_container.html' with content_dict=obj content_template_name=content_template_name%}
+{% endfor %}
+</div>
+  </form>
+{%endblock%}
+{% block javascriptblock %}
+{% endblock %}

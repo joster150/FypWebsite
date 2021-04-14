@@ -1,0 +1,29 @@
+{% extends "card_inner.html" %}
+{% block title %}
+  {{fed_data.name}}
+{% endblock %}
+{% block main_body %}
+  <p class="card-text">
+      {{fed_data.description}}
+  </p>
+  <h6 class="card-subtitle text-muted">
+    Functions:
+  </h6>
+    <ul class='list-inline funcinfo {{fed_data.slug_name}}'>
+    {% for obj in fed_data.functions %}
+      <li class="list-inline-item" {% if forloop.first %} style="font-weight: bold;" {% endif %} id="{{obj}}!{{fed_data.slug_name}}">{{obj}}</li>
+    {% endfor %}
+    </ul>
+    <h6 class="card-subtitle text-muted">
+      Function Info for Selected:
+    </h6>
+    <p class="card-text text-center functionDoc {{fed_data.slug_name}}">
+    {{fed_data.first_func}}
+    </p>
+{% endblock %}
+{% block second_body %}
+{% endblock %}
+{% block footer %}
+<button onclick="location.href='/notebooks/{{fed_data.slug_name}}/'" type="button" class="btn btn-success">
+  View Notebook and Tests</button>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="container text-center">
+<h1>{{nb_name}}</h1>
+<h5 >{{nb_description}}</h5>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-5 border border-5 border-secondary mx-auto">
+    {{nb_content|safe}}
+  </div>
+  <div class="col-5 border border-5 border-secondary mx-auto">
+    {{nb_test_content|safe}}
+  </div>
+</div>
+{% endblock %}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'notebooks/js/notebookList.js' %}"></script>
+{% endblock %}

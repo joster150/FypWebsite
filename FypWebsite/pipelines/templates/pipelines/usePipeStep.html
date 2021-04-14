@@ -1,0 +1,22 @@
+{% extends "card_inner.html" %}
+{% block title %}
+  Step {{fed_data.step_class_title}}
+{% endblock %}
+{% block main_body %}
+<div><h6 class="text-muted my-0">Module/Function
+</h6><p class="my-1">
+{{fed_data.module_function}}
+</p></div>
+<div><h6 class="text-muted my-0">Description
+</h6><p class="my-1">
+{{fed_data.description|safe}}
+</p></div>
+<div class="form-group pipeline-form-container">
+  {{fed_data.form|safe}}
+</div>
+{% endblock %}
+{% block second_body %}{% endblock %}
+{% block footer %}
+<h6 class="text-muted my-0 toggle">Output: {{fed_data.output}}
+</h6>{{fed_data.include_output|safe}}
+{% endblock %}

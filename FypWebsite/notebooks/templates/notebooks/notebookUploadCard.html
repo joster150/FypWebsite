@@ -1,0 +1,14 @@
+{% extends "card_inner.html" %}
+{% block title %}
+  {{fed_data.title}}
+{% endblock %}
+{% block main_body %}
+  <div class="form-group" style="overflow:hidden">
+  {{fed_data.form.as_p}}
+  </div>
+{% endblock %}
+{% block second_body %}
+{% endblock %}
+{% block footer %}
+<button class="btn btn-primary" type='submit'>Submit</button>
+{% endblock %}

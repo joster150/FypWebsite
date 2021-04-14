@@ -1,0 +1,38 @@
+{% extends "card_inner.html" %}
+{% block title %}
+  {{fed_data.title}}
+{% endblock %}
+{% block main_body %}
+<h6 class="my-0">Group</h6>
+{{fed_data.table_group}}
+<h6 class="mb-0">Columns Definition</h6>
+<div class='table-responsive' style='overflow:auto;height:290px'>
+<table class="card-table table small" style="display:inline-block;">
+<thead>
+<tr>
+  <th scope="col">Column</th>
+  <th scope="col">Type</th>
+  <th scope="col">Required</th>
+  <th scope="col">Max_Len</th>
+</tr>
+</thead>
+<tbody>
+{% for obj in fed_data.columns%}
+<tr>
+  <td>{{obj.name}}</td>
+  <td>{{obj.d_type}}</td>
+  <td>{{obj.required}}</td>
+  <td>{{obj.max_length}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}
+{% block second_body %}
+  <h6>Created By: {{fed_data.user}}</h6>
+{% endblock %}
+{% block footer %}
+  <button onclick="location.href='{{fed_data.view_data}}'" type="button" class="btn btn-success">
+    View Table</button>
+{% endblock %}

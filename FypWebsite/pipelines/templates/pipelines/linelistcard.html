@@ -1,0 +1,16 @@
+{% extends "card_inner.html" %}
+{% block title %}
+  {{fed_data.title}}
+{% endblock %}
+{% block main_body %}
+  <h6>Description</h6>
+  {{fed_data.description|truncatewords:50}}
+{% endblock %}
+{% block second_body %}
+  <h6>Created By</h6>
+  {{fed_data.user}}
+{% endblock %}
+{% block footer %}
+  <button onclick="location.href='{{fed_data.slug}}'" type="button" class="btn btn-success">
+    Use Pipeline</button>
+{% endblock %}

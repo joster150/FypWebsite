@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<div class="row justify-content-center">
+<div class="col col-md-6 col-12 text-center">
+<h2>Summary of website functionality</h2>
+<img class="img-fluid" src="/media/media/web_summary.png" alt="website_summary" >
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col col-md-6 col-12 text-center">
+  <h2>Summary of website use cases</h2>
+<div class="row justify-content-center">
+<div class="col-6 text-center my-auto">
+<figure>
+<img style="width:100%;" class="px-3" src="/media/media/bridge.png" alt="Arup 3D Printed Bridge" >
+<figcaption>Arup's computer optimised 3D printed bridge design <a href="https://www.arup.com/projects/mx3d-bridge">(LINK)</a></figcaption>
+</figure>
+</div>
+<div class="col-6 text-center my-auto">
+<figure>
+<img style="width:100%" class="px-3" src="/media/media/buisness.png" alt="Arup 3D Printed Bridge" >
+<figcaption>R. Singh, D. J. Graham, and R. J. Anderson, “Quantifying the effects of passenger-level heterogeneity on transit journey
+times,” Data-Centric Engineering, vol. 1, 2020.
+</figcaption>
+</figure>
+</div>
+<div class="col-6 text-center my-auto">
+<figure>
+<img style="width:100%" class="px-3" src="/media/media/trent1000.png" alt="Arup 3D Printed Bridge" >
+<figcaption>The Trent-1000, and all other civil aircraft engines, require data processing in the design, testing, manufacturing, and in performacne monitoring <a href="https://www.rolls-royce.com/products-and-services/civil-aerospace/airlines/trent-1000.aspx\#section-related-stories">(LINK)</a></figcaption>
+</figure>
+</div>
+<div class="col-6 text-center my-auto">
+<figure>
+<img style="width:100%" class="px-3" src="/media/media/floatation.jpg" alt="Arup 3D Printed Bridge" >
+<figcaption> Machine learning predictions can help optimise industiral processing. <a href="https://www.tec-science.com/material-science/steel-making/iron-ore-mining-and-dressing/">(LINK)</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col col-md-6 col-12 text-center">
+  <h2>Getting started documentation</h2>
+  </div>
+  </div>
+<div class="row justify-content-center">
+  {%for obj in content_dicts%}
+    {% include 'card_container.html' with content_dict=obj content_template_name=content_template_name%}
+  {% endfor %}
+</div>
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  {% include 'markdown.html'%}
+  <script>
+    $(document).ready(function(){
+      var content,marked_content
+      $(".markdown-content").each(function(){
+      content=$(this).text();
+      console.log(content)
+      marked_content=marked(content);
+      $(this).html(marked_content);
+    });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+{%block bodyblock%}
+<form method='POST' enctype='multipart/form-data'>{% csrf_token %}
+<div class="row justify-content-center">
+  <div class="col-3 text-center">
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-1 my-3">
+      <div class="card mx-auto px-0" style="width:25rem;height:100px;overflow:auto">
+        <div class="card-body py-1 px-1" style="height:100%">
+          <h5 class="card-title my-0 py-0">{{content_dicts1.name}}</h5>
+          </div>
+          <div class="card-footer text-center mx-0 px-0 py-0">
+            <button type="submit" class="submit_ajax_steps btn btn-primary">Submit</button>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xlg-1 my-3">
+      <div class="card mx-auto px-0" style="width:25rem;height:750px;overflow:auto">
+        <div class="card-body" style="height:100%">
+          <h5 class="card-title">Table Parameter Selection</h5>
+          <div><h6 class="text-muted my-0">Table Groups</h6><div class="my-1">
+            {{content_dicts1.table_groups|safe}}
+          </div></div>
+          <div><h6 class="text-muted my-0">Tables</h6><div class="my-1">
+            {{content_dicts1.tables_in_group|safe}}
+          </div></div>
+          <div><h6 class="text-muted my-0">Search Column</h6><div class="my-1">
+            {{content_dicts1.columns_in_table|safe}}
+          </div></div>
+          <div><h6 class="text-muted my-0">Search</h6><div class="my-1">
+            <input type="text" id="myInput" onkeyup="mySearchFunction()" placeholder="Filter on selected col.." title="Filter">
+          </div></div>
+          <div><h6 class="text-muted my-0">Table</h6><div class="my-1">
+            <div class='table-responsive text-center' style="height: 280px;overflow: auto;">
+              <table class="table text-xsmall mx-auto" id="myTable">
+              <thead>
+              <tr>
+                {% for col in content_dicts1.table_data_columns%}
+                <th scope="col">{{col}}</th>
+                {% endfor %}
+              </tr>
+              </thead>
+              <tbody class="table_html">
+              {% for row in content_dicts1.rows %}
+              <tr>
+              {% for col in content_dicts1.table_data_columns %}
+              {% for c,r in row.items %}
+                {%if col == c %}
+                <td>{{r}}</td>
+                {% endif %}
+              {% endfor %}
+              {% endfor %}
+              </tr>
+              {% endfor %}
+              </tbody>
+              </table>
+          </div>
+          </div>
+          </div>
+          <div><h6 class="text-muted my-0">Add to Output List</h6><div class="my-1">
+          <p id="table_field_to_add"><br></p><button type="button" id="add_to_output">Add to Outputs</button>
+          </div></div>
+          </div>
+      </div>
+    </div>
+    </div>
+  <div class="col-9">
+    <div class="row justify-content-center">
+  {% for obj in content_dicts%}
+    {% include 'card_container.html' with content_dict=obj content_template_name=content_template_name%}
+  {% endfor %}
+    </div>
+  </div>
+</form>
+
+    {% for active, table, table_var, variable, vars, graph, graphs, graphs2 in out_zip %}
+    {% if active %}
+    {% if table %}
+    <div class="col-12 text-center">
+      <div class="my-2 card mx-auto" style="width:100%;max-width:1000px;">
+          <button type="button", class="download-table btn btn-primary" id="{{table_var.1}}">Download Output</button>
+          <div class='table-responsive text-center' style="overflow:auto;height:500px">
+            <table class="table mx-auto">
+            <thead>
+            <tr class="include-down">
+              {% for col in table_var.0.cols%}
+              <th class="include-down" scope="col">{{col}}</th>
+              {% endfor %}
+            </tr>
+            </thead>
+            <tbody class="table_html">
+            {% for row in table_var.0.rows %}
+            <tr class="include-down">
+            {% for col in row%}
+              <td class="include-down">{{col}}</td>
+            {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+          </div>
+        </div></div>
+    </div>
+    {% endif %}
+    {% if variable %}
+    <div class="col-12">
+      <div class="my-2 card mx-auto" style="width:100%;max-width:1000px;">
+          <h5 class="card-title px-3 mb-1 text-success">Output</h5>
+        <div class="card-text text-center">
+          {{vars.name}} : {{vars.value}}
+      </div></div></div>
+    </div>
+    {% endif %}
+    {% if graph %}
+    <div class="col-12">
+      <div class="my-2 card mx-auto" style="width:100%;max-width:1000px;">
+        <button type="button", class="download-graph btn btn-primary" id="{{graphs2.1}}">Download Output</button>
+        <canvas class="myChart"></canvas>
+      </div></div></div>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+
+{%endblock%}
+{% block javascriptblock %}
+  {% load static %}
+  <script src="{% static 'pipelines/js/usePipeline.js' %}"></script>
+  <script src="{% static 'static/js/table_to_csv.js' %}"></script>
+  <script src="{% static 'static/js/graph_to_jpg.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  <style>h6.toggle{cursor:pointer}</style>
+  <script>
+  function getRandomRgb() {
+  var num = Math.round(0xffffff * Math.random());
+  var r = num >> 16;
+  var g = num >> 8 & 255;
+  var b = num & 255;
+  return 'rgb(' + r + ', ' + g + ', ' + b + ',0.5)';
+  }
+
+  const colorScheme = [
+      "#25CCF7","#FD7272","#54a0ff","#00d2d3",
+      "#1abc9c","#2ecc71","#3498db","#9b59b6","#34495e",
+      "#16a085","#27ae60","#2980b9","#8e44ad","#2c3e50",
+      "#f1c40f","#e67e22","#e74c3c","#ecf0f1","#95a5a6",
+      "#f39c12","#d35400","#c0392b","#bdc3c7","#7f8c8d",
+      "#55efc4","#81ecec","#74b9ff","#a29bfe","#dfe6e9",
+      "#00b894","#00cec9","#0984e3","#6c5ce7","#ffeaa7",
+      "#fab1a0","#ff7675","#fd79a8","#fdcb6e","#e17055",
+      "#d63031","#feca57","#5f27cd","#54a0ff","#01a3a4"
+  ];
+  var ctx,label,data,type,xlabel,ylabel,title,isline;
+
+  ctxs=$('.myChart');
+  var graphs_var=[]
+  for(gri=0;gri<{{graphs|length}};gri++){
+    graphs_var.push(JSON.parse({{graphs|safe}}[gri]));
+    console.log(graphs_var[gri])
+  }
+  var cht;
+  for(cht=0;cht < ctxs.length;cht++){
+    console.log(ctxs[cht]);
+    xlabel=graphs_var[cht]['xlabel'];
+    ylabel=graphs_var[cht]['ylabel'];
+    title=graphs_var[cht]['title'];
+    xlabelshow=true;
+    ylabelshow=true;
+    titleshow=true;
+    if(typeof(xlabel)=="undefined"){
+    xlabelshow=false;
+    }
+    if(typeof(ylabel)=="undefined"){
+    ylabelshow=false;
+    }
+    if(typeof(title)=="undefined"){
+    titleshow=false;
+    }
+    if(graphs_var[cht]['type']=="scatter"){
+      type=graphs_var[cht]['type'];
+      data=graphs_var[cht]['data'];
+      label=graphs_var[cht]['legend'];
+      console.log(data);
+      isLine=graphs_var[cht]['showLine'];
+      var datasets=[];
+      var temp_data=[]
+    for(i in data){
+      temp_data=[];
+      for(j in data[i]['x']){
+        temp_data.push({x:data[i]['x'][j],y:data[i]['y'][j]});
+      }
+      datasets.push({
+        data:temp_data,
+        label:label[i],
+        backgroundColor:colorScheme[i],
+        borderColor:colorScheme[i],
+        fill: false,
+        showLine:isLine
+      });
+    };
+      var myChart = new Chart(ctxs[cht], {
+          type: type,
+          data: {
+              datasets: datasets
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio:true,
+              elements: {
+                line: {
+                  tension: 0
+                      }
+              },
+              title: {
+                     display: titleshow,
+                     text: title
+                },
+              scales: {
+                xAxes: [{
+                  display: true,
+                  scaleLabel: {
+                    display: xlabelshow,
+                    labelString: xlabel
+                  }
+                }],
+                yAxes: [{
+                  display: true,
+                  scaleLabel: {
+                    display: ylabelshow,
+                    labelString: ylabel
+                  }
+                }]
+            }
+          }
+      });
+    }else if(label=graphs_var[cht]['type']=='hist'){
+      for(i=0;i < graphs_var[cht]['datasets'].length;i++){
+        graphs_var[cht]['datasets'][i]['barPercentage']=1.25
+        graphs_var[cht]['datasets'][i]['backgroundColor']=getRandomRgb()
+      }
+      var myChart = new Chart(ctxs[cht], {
+        type: 'bar',
+        data: {
+          labels: graphs_var[cht]['labels'],
+          datasets: graphs_var[cht]['datasets']
+        },
+        options: {
+          title: {
+                 display: titleshow,
+                 text: title
+            },
+          scales: {
+            xAxes: [{
+              display: false,
+              stacked: true,
+              ticks: {
+                  max: graphs_var[cht]['max_x']-graphs_var[cht]['diff'],
+                  min: graphs_var[cht]['min_x']
+              }
+           }, {
+              display: true,
+              stacked: true,
+              scaleLabel: {
+                display: xlabelshow,
+                labelString: xlabel
+              },
+              ticks: {
+                  autoSkip: false,
+                  max:graphs_var[cht]['max_x'],
+                  min:graphs_var[cht]['min_x']
+              }
+            }],
+            yAxes: [{
+              display: true,
+              stacked: false,
+              scaleLabel: {
+                display: ylabelshow,
+                labelString: ylabel
+              }
+            }]
+          }
+        }
+      });
+    }
+
+  };
+
+  </script>
+{% endblock %}

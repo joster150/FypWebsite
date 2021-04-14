@@ -1,0 +1,16 @@
+{% extends "card_inner.html" %}
+{% block title %}
+  {{fed_data.title}}
+{% endblock %}
+{% block main_body %}
+  <div class="form-group table-form-container">
+  {{fed_data.form.as_p}}
+  </div>
+{% endblock %}
+{% block second_body %}
+
+{% endblock %}
+{% block footer %}
+<button type="button" class="submit_ajax_fields btn btn-primary">Submit</button>
+<button type="button" class="addCard btn btn-primary">Add Field</button>
+{% endblock %}
