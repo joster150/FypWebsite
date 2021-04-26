@@ -47,7 +47,8 @@ def viewNotebook(request,note_slug):
         context['nb_test_content']=nb[0].notebook_test_html
         context['nb_name']=nb[0].verbose_name
         context['nb_description']=nb[0].description
-
+        context['download_nb']=nb[0].notebook.url
+        context['download_test_nb']=nb[0].notebook_test.url
     return render(request,template_name,context)
 @login_required(login_url="/login/")
 def uploadNotebook(request):

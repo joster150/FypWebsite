@@ -1,0 +1,60 @@
+.
+├── FypWebsite
+│   ├── documentation
+│   │   ├── migrations
+│   │   │   └── __pycache__
+│   │   ├── __pycache__
+│   │   └── templates
+│   │       └── documentation
+│   ├── dynamicTables
+│   │   ├── migrations
+│   │   │   └── __pycache__
+│   │   ├── __pycache__
+│   │   ├── static
+│   │   │   └── dynamicTables
+│   │   │       └── js
+│   │   └── templates
+│   │       └── dynamicTables
+│   ├── FypWebsite
+│   │   └── __pycache__
+│   ├── include
+│   ├── notebooks
+│   │   ├── migrations
+│   │   │   └── __pycache__
+│   │   ├── __pycache__
+│   │   ├── static
+│   │   │   └── notebooks
+│   │   │       └── js
+│   │   └── templates
+│   │       └── notebooks
+│   ├── pipelines
+│   │   ├── migrations
+│   │   │   └── __pycache__
+│   │   ├── __pycache__
+│   │   ├── static
+│   │   │   └── pipelines
+│   │   │       └── js
+│   │   └── templates
+│   │       └── pipelines
+│   ├── templates
+│   └── userAuth
+│       ├── migrations
+│       │   └── __pycache__
+│       ├── __pycache__
+│       └── templates
+│           └── userAuth
+└── static_cdn
+    ├── blank
+    ├── media
+    │   └── TEST-DOCS
+    ├── nbscripts
+    │   ├── CASE_STUDY
+    │   │   └── __pycache__
+    │   ├── TEMPLATES
+    │   │   └── __pycache__
+    │   └── TEST_GROUP
+    │       └── __pycache__
+    └── static
+        └── js
+
+57 directories
